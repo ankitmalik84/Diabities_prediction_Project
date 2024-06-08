@@ -2,141 +2,89 @@
 <html>
   <head>
     <title>Diabetes Prediction</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f8ff;
-        color: #333;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-      }
-
-      h1 {
-        color: #4caf50;
-      }
-
-      p {
-        text-align: center;
-        font-size: 18px;
-      }
-
-      form {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
-        width: 100%;
-        margin-bottom: 20px;
-      }
-
-      input[type="number"],
-      input[type="float"] {
-        width: calc(100% - 22px);
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-
-      button {
-        background-color: #4caf50;
-        color: white;
-        padding: 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        width: 100%;
-        font-size: 16px;
-      }
-
-      button:hover {
-        background-color: #45a049;
-      }
-
-      #result {
-        margin-top: 20px;
-        font-size: 18px;
-        text-align: center;
-      }
-
-      footer {
-        margin-top: 20px;
-        font-size: 14px;
-        color: #666;
-      }
-
-      /* Loader styling */
-      .loader {
-        border: 6px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 6px solid #3498db;
-        width: 30px;
-        height: 30px;
-        animation: spin 2s linear infinite;
-        margin: 0 auto;
-        display: none;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
-    <h1>Diabetes Prediction Model</h1>
-    <p>Enter the following features to predict diabetes:</p>
-    <form id="predictionForm">
-      <input
-        type="number"
-        id="feature1"
-        name="feature1"
-        placeholder="Pregnancies"
-      />
-      <input
-        type="number"
-        id="feature2"
-        name="feature2"
-        placeholder="Glucose"
-      />
-      <input
-        type="number"
-        id="feature3"
-        name="feature3"
-        placeholder="Blood Pressure"
-      />
-      <input
-        type="float"
-        id="feature4"
-        name="feature4"
-        placeholder="Skin Thickness"
-      />
-      <input type="float" id="feature5" name="feature5" placeholder="Insulin" />
-      <input type="float" id="feature6" name="feature6" placeholder="BMI" />
-      <input
-        type="float"
-        id="feature7"
-        name="feature7"
-        placeholder="Diabetes Pedigree Function"
-      />
-      <input type="number" id="feature8" name="feature8" placeholder="Age" />
-      <button type="submit">Predict</button>
-    </form>
-    <div class="loader" id="loader"></div>
-    <p id="result"></p>
-
-    <footer>This model uses machine learning to predict diabetes.</footer>
-
+    <div class="container">
+      <h1 class="heading">Diabetes Prediction Model</h1>
+      <p>Enter the following features to predict diabetes:</p>
+      <form id="predictionForm" class="form">
+        <label for="feature1">Pregnancies</label>
+        <input
+          class="input"
+          type="number"
+          id="feature1"
+          name="feature1"
+          placeholder="0 to 17"
+        />
+        <label for="feature2">Glucose</label>
+        <input
+          class="input"
+          type="number"
+          id="feature2"
+          name="feature2"
+          placeholder="0 to 199 mg/dL"
+        />
+        <label for="feature3">Blood Pressure</label>
+        <input
+          class="input"
+          type="number"
+          id="feature3"
+          name="feature3"
+          placeholder="0 to 122 mm Hg"
+        />
+        <label for="feature4">Skin Thickness</label>
+        <input
+          class="input"
+          type="float"
+          id="feature4"
+          name="feature4"
+          placeholder="0 to 99 mm"
+        />
+        <label for="feature5">Insulin</label>
+        <input
+          class="input"
+          type="float"
+          id="feature5"
+          name="feature5"
+          placeholder="0 to 846 μU/mL"
+        />
+        <label for="feature6">BMI</label>
+        <input
+          class="input"
+          type="float"
+          id="feature6"
+          name="feature6"
+          placeholder="0 to 67.1 kg/m²"
+        />
+        <label for="feature7">Diabetes Pedigree Function</label>
+        <input
+          class="input"
+          type="float"
+          id="feature7"
+          name="feature7"
+          placeholder="0.078 to 2.42"
+        />
+        <label for="feature8">Age</label>
+        <input
+          type="number"
+          class="input"
+          id="feature8"
+          name="feature8"
+          placeholder="21 to 81 years"
+        />
+        <div class="loader" id="loader"></div>
+        <p id="result"></p>
+        <button type="submit" class="login-button">Predict</button>
+        <div class="info">
+          This model uses
+          <a href="https://github.com/ankitmalik84/Diabities_prediction_Project"
+            >machine learning</a
+          >
+          to predict diabetes with accuracy 80%.
+        </div>
+      </form>
+    </div>
     <script>
       document
         .getElementById("predictionForm")
@@ -167,8 +115,9 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              document.getElementById("result").innerText =
-                "Prediction: " + data.prediction;
+              document.getElementById("result").innerText = data.prediction
+                ? "This person has diabetes."
+                : "This person does not have diabetes.";
             })
             .catch((error) => {
               console.error("Error:", error);
@@ -176,7 +125,6 @@
                 "An error occurred. Please try again.";
             })
             .finally(() => {
-              // Hide loader
               document.getElementById("loader").style.display = "none";
             });
         });
