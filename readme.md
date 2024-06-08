@@ -20,6 +20,14 @@ Initial accuracy: 69.09%
 
 Accuracy after tuning: 77.92%
 
+## Performance Metrics
+
+![Logistic Regression Performance](img/metrices.png)
+
+## Web Interface Screenshots
+
+![Screenshot 1](img/view.png)
+
 ## Usage
 
 1. **Training Models:** Use the provided dataset to train machine learning models using logistic regression, decision tree, random forest classifier, and naive Bayes algorithms.
