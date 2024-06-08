@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Diabetes Prediction</title>
+  </head>
+  <body>
+    <h1>Diabetes Prediction</h1>
+    <form id="predictionForm">
+      <!-- Add input fields for each feature -->
+      <input
+        type="number"
+        id="feature1"
+        name="feature1"
+        placeholder="Pregnancies"
+      />
+      <input
+        type="number"
+        id="feature2"
+        name="feature2"
+        placeholder="Glucose"
+      />
+      <input
+        type="number"
+        id="feature3"
+        name="feature3"
+        placeholder="Blood Pressure"
+      />
+      <input
+        type="float"
+        id="feature4"
+        name="feature4"
+        placeholder="Skin Thickness"
+      />
+      <input type="float" id="feature5" name="feature5" placeholder="Insulin" />
+      <input type="float" id="feature6" name="feature6" placeholder="BMI" />
+      <input
+        type="float"
+        id="feature7"
+        name="feature7"
+        placeholder="Diabetes Pedigree Function"
+      />
+      <input type="number" id="feature8" name="feature8" placeholder="Age" />
+      <button type="submit">Predict</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+      document
+        .getElementById("predictionForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const features = [
+            parseFloat(document.getElementById("feature1").value),
+            parseFloat(document.getElementById("feature2").value),
+            parseFloat(document.getElementById("feature3").value),
+            parseFloat(document.getElementById("feature4").value),
+            parseFloat(document.getElementById("feature5").value),
+            parseFloat(document.getElementById("feature6").value),
+            parseFloat(document.getElementById("feature7").value),
+            parseFloat(document.getElementById("feature8").value),
+          ];
+
+          fetch("http://127.0.0.1:5000/predict", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ features }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              document.getElementById("result").innerText =
+                "Prediction: " + data.prediction;
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+    </script>
+  </body>
+</html>
