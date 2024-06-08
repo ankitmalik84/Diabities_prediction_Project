@@ -2,11 +2,101 @@
 <html>
   <head>
     <title>Diabetes Prediction</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      h1 {
+        color: #4caf50;
+      }
+
+      p {
+        text-align: center;
+        font-size: 18px;
+      }
+
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      input[type="number"],
+      input[type="float"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      #result {
+        margin-top: 20px;
+        font-size: 18px;
+        text-align: center;
+      }
+
+      footer {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #666;
+      }
+
+      /* Loader styling */
+      .loader {
+        border: 6px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 6px solid #3498db;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+        margin: 0 auto;
+        display: none;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>Diabetes Prediction</h1>
+    <h1>Diabetes Prediction Model</h1>
+    <p>Enter the following features to predict diabetes:</p>
     <form id="predictionForm">
-      <!-- Add input fields for each feature -->
       <input
         type="number"
         id="feature1"
@@ -42,7 +132,10 @@
       <input type="number" id="feature8" name="feature8" placeholder="Age" />
       <button type="submit">Predict</button>
     </form>
+    <div class="loader" id="loader"></div>
     <p id="result"></p>
+
+    <footer>This model uses machine learning to predict diabetes.</footer>
 
     <script>
       document
@@ -61,6 +154,10 @@
             parseFloat(document.getElementById("feature8").value),
           ];
 
+          // Show loader
+          document.getElementById("loader").style.display = "block";
+          document.getElementById("result").innerText = "";
+
           fetch("http://127.0.0.1:5000/predict", {
             method: "POST",
             headers: {
@@ -75,6 +172,12 @@
             })
             .catch((error) => {
               console.error("Error:", error);
+              document.getElementById("result").innerText =
+                "An error occurred. Please try again.";
+            })
+            .finally(() => {
+              // Hide loader
+              document.getElementById("loader").style.display = "none";
             });
         });
     </script>
